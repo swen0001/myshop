@@ -79,12 +79,9 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "myshop.users",
     # Your stuff: custom apps go here
-    # "cart.apps.CartConfig",
     "myshop.cart",
     "myshop.shop",
     "myshop.orders",
-    # "shop.apps.ShopConfig",
-    # "orders.apps.OrdersConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -225,7 +222,7 @@ CART_SESSION_ID = 'cart'
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
 EMAIL_BACKEND = env(
     "DJANGO_EMAIL_BACKEND",
-    default="django.core.mail.backends.smtp.EmailBackend",
+    default="django.core.mail.backends.console.EmailBackend",
 )
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-timeout
 EMAIL_TIMEOUT = 5
