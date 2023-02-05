@@ -20,9 +20,9 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
     # My urls
-    path('cart/', include('cart.urls', namespace='cart')),
-    path('orders/', include('orders.urls', namespace='orders')),
-    path('', include('shop.urls', namespace='shop')),
+    path('cart/', include('myshop.cart.urls', namespace='cart')),
+    path('orders/', include('myshop.orders.urls', namespace='orders')),
+    path('', include('myshop.shop.urls', namespace='shop')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 if settings.DEBUG:
     # Static file serving when using Gunicorn + Uvicorn for local web socket development
