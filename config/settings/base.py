@@ -82,6 +82,7 @@ LOCAL_APPS = [
     "myshop.cart",
     "myshop.shop",
     "myshop.orders",
+    "myshop.payment",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -338,3 +339,11 @@ SPECTACULAR_SETTINGS = {
 }
 # Your stuff...
 # ------------------------------------------------------------------------------
+#
+# Stripe settings
+# ------------------------------------------------------------------------------
+# Secret key
+STRIPE_PUBLISHABLE_KEY = env("STRIPE_PUBLISHABLE_KEY")
+STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY")
+STRIPE_API_VERSION = '2022-08-01'
+STRIPE_WEBHOOK_SECRET = env("STRIPE_WEBHOOK_SECRET")
