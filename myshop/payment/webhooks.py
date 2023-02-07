@@ -1,8 +1,11 @@
 import stripe
+
 from django.conf import settings
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+
 from myshop.orders.models import Order
+from .tasks import payment_completed
 
 
 @csrf_exempt
@@ -12,10 +15,7 @@ def stripe_webhook(request):
     event = None
 
     try:
-        event = stripe.Webhook.construct_event(
-            payload,
-            sig_header,
-            settings.STRIPE_WEBHOOK_SECRET)
+        event = stripe.Webhook.construct_event(payload, sig_header, settings.STRIPE_WEBHOOK_SECRET)
     except ValueError as e:
         # Invalid payload
         return HttpResponse(status=400)
@@ -35,4 +35,6 @@ def stripe_webhook(request):
             # store Stripe payment ID
             order.stripe_id = session.payment_intent
             order.save()
+            # launch asynchronous task
+            payment_completed.delay(order.id)
     return HttpResponse(status=200)
