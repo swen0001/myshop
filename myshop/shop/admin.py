@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Category, Product
+from myshop.shop.models import Category, Product
 from myshop.exp_to_csv import export_to_csv
 
 

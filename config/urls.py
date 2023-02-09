@@ -5,16 +5,20 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import include, path
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
+from django.conf.urls.i18n import i18n_patterns
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework.authtoken.views import obtain_auth_token
 
-urlpatterns = [
+from myshop.payment import webhooks
+
+urlpatterns = i18n_patterns(
     path("home/", TemplateView.as_view(template_name="pages/home.html"), name="home"),
     path(
         "about/", TemplateView.as_view(template_name="pages/about.html"), name="about"
     ),
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
+    path('rosetta/', include('rosetta.urls')),
     # User management
     path("users/", include("myshop.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
@@ -24,14 +28,16 @@ urlpatterns = [
     path('orders/', include('myshop.orders.urls', namespace='orders')),
     path('payment/', include('myshop.payment.urls', namespace='payment')),
     path('coupons/', include('myshop.coupons.urls', namespace='coupons')),
+    path('payment/webhook/', webhooks.stripe_webhook, name='stripe-webhook'),
     path('', include('myshop.shop.urls', namespace='shop')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    prefix_default_language=False,
+               ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 if settings.DEBUG:
     # Static file serving when using Gunicorn + Uvicorn for local web socket development
     urlpatterns += staticfiles_urlpatterns()
 
 # API URLS
-urlpatterns += [
+urlpatterns += (
     # API base url
     path("api/", include("config.api_router")),
     # DRF auth token
@@ -42,7 +48,7 @@ urlpatterns += [
         SpectacularSwaggerView.as_view(url_name="api-schema"),
         name="api-docs",
     ),
-]
+)
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit

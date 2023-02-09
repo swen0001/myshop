@@ -5,6 +5,8 @@ from pathlib import Path
 
 import environ
 
+from django.utils.translation import gettext_lazy as _
+
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # myshop/
 APPS_DIR = BASE_DIR / "myshop"
@@ -25,7 +27,13 @@ DEBUG = env.bool("DJANGO_DEBUG", False)
 # In Windows, this must be set to your system time zone.
 TIME_ZONE = "Europe/Kyiv"
 # https://docs.djangoproject.com/en/dev/ref/settings/#language-code
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = 'uk'
+
+LANGUAGES = [
+    ('en', _('English')),
+    ('uk', _('Ukrainian')),
+]
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#site-id
 SITE_ID = 1
 # https://docs.djangoproject.com/en/dev/ref/settings/#use-i18n
@@ -74,6 +82,8 @@ THIRD_PARTY_APPS = [
     "rest_framework.authtoken",
     "corsheaders",
     "drf_spectacular",
+    'rosetta',
+    'parler',
 ]
 
 LOCAL_APPS = [
@@ -354,4 +364,3 @@ STRIPE_WEBHOOK_SECRET = env("STRIPE_WEBHOOK_SECRET")
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
 REDIS_DB = 1
-
