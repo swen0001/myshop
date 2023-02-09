@@ -364,3 +364,15 @@ STRIPE_WEBHOOK_SECRET = env("STRIPE_WEBHOOK_SECRET")
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
 REDIS_DB = 1
+
+# django-parler settings
+PARLER_LANGUAGES = {
+    1: (
+        {'code': 'uk'},
+        {'code': 'en'},
+    ),
+    'default': {
+        'fallback': 'uk',
+        'hide_untranslated': False,
+    }
+}
