@@ -84,6 +84,7 @@ THIRD_PARTY_APPS = [
     "drf_spectacular",
     'rosetta',
     'parler',
+    'import_export',
 ]
 
 LOCAL_APPS = [

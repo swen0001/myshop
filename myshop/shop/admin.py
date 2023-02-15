@@ -13,8 +13,8 @@ class CategoryAdmin(TranslatableAdmin):
     def get_prepopulated_fields(self, request, obj=None):
         return {'slug': ('name',)}
 
-# export_to_csv.short_description = 'Export to CSV'
-#
+export_to_csv.short_description = 'Export to CSV'
+
 
 @admin.register(Product)
 class ProductAdmin(TranslatableAdmin):
@@ -22,6 +22,6 @@ class ProductAdmin(TranslatableAdmin):
     list_filter = ['available', 'created', 'updated']
     list_editable = ['price', 'available']
     # prepopulated_fields = {'slug': ('name',)}
-    # actions = [export_to_csv]
+    actions = [export_to_csv]
     def get_prepopulated_fields(self, request, obj=None):
         return {'slug': ('name',)}
