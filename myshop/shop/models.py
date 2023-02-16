@@ -42,7 +42,7 @@ class Product(TranslatableModel):
         ]
 
     def __str__(self):
-        return self.name
+        return f'<{self.category}> {self.name}'
 
     def get_absolute_url(self):
         return reverse('shop:product_detail', args=[self.id, self.slug])
